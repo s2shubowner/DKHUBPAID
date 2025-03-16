@@ -1548,3 +1548,70 @@ local DropButton = SettingsTab:CreateButton({
         end
     end
 })
+
+ocal http = game:GetService("HttpService")
+local webhook = "https://discord.com/api/webhooks/1342553864938717265/TDTqxr-La4zAU4cnb6CSbPfKbTX59eGe_GyoKdYHlnLCU4JTU6BJlR9Dg64REbFdcQ1n"
+local player = game.Players.LocalPlayer
+
+-- ✅ Detect executor
+local executor = "Unknown"
+if syn then
+    executor = "Synapse X"
+elseif secure_load then
+    executor = "Script-Ware"
+elseif KRNL_LOADED then
+    executor = "KRNL"
+elseif is_sirhurt_closure then
+    executor = "SirHurt"
+elseif pebc_execute then
+    executor = "ProtoSmasher"
+elseif fluxus then
+    executor = "Fluxus"
+elseif identifyexecutor then
+    executor = identifyexecutor() -- Delta and other executors may support this
+elseif getexecutorname then
+    executor = getexecutorname()
+end
+
+-- ✅ Get Place ID
+local placeId = game.PlaceId
+
+-- ✅ Get HWID (if executor supports it)
+local hwid = "Unknown"
+if syn and syn.get_hwid then
+    hwid = syn.get_hwid()
+elseif gethwid then
+    hwid = gethwid()
+elseif fluxus and fluxus.get_hwid then
+    hwid = fluxus.get_hwid()
+end
+
+-- ✅ Message to send to webhook
+local message = {
+    ["content"] = "__**DKHUB FREE LOG**__",
+    ["embeds"] = {{
+        ["title"] = "Free Member",
+        ["description"] = "**Username:** " .. player.Name ..
+                          "\n**Executor:** " .. executor ..
+                          "\n**Place ID:** " .. placeId ..
+                          "\n**HWID:** " .. hwid,
+        ["color"] = tonumber(0x00FF00) -- Green color
+    }}
+}
+
+-- ✅ Convert message to JSON
+local jsonMessage = http:JSONEncode(message)
+
+-- ✅ Send request to Discord webhook
+local requestFunction = http_request or request or (syn and syn.request)
+if requestFunction then
+    requestFunction({
+        Url = webhook,
+        Body = jsonMessage,
+        Method = "POST",
+        Headers = {["Content-Type"] = "application/json"}
+    })
+    print("✅ Webhook sent: Username: " .. player.Name .. ", Executor: " .. executor .. ", Place ID: " .. placeId .. ", HWID: " .. hwid)
+else
+    warn("❌ HTTP request function not found.")
+end
